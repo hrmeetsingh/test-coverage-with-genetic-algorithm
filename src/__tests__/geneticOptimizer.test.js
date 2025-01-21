@@ -2,7 +2,7 @@ import { GeneticTestOptimizer } from '../geneticTestOptimiser.js';
 
 describe('Genetic Test Optimizer', () => {
   let optimizer;
-  
+
   beforeEach(() => {
     optimizer = new GeneticTestOptimizer(10, 5);
   });
@@ -30,7 +30,7 @@ describe('Genetic Test Optimizer', () => {
     const parent1 = { a: 1, b: 2 };
     const parent2 = { a: 3, b: 4 };
     const child = optimizer.crossover(parent1, parent2);
-    
+
     expect(child).toHaveProperty('a');
     expect(child).toHaveProperty('b');
     expect([parent1.a, parent2.a]).toContain(child.a);
@@ -40,7 +40,7 @@ describe('Genetic Test Optimizer', () => {
   test('should perform mutation within specified range', () => {
     const testCase = { a: 50, b: 50 };
     const mutated = optimizer.mutate(testCase, 1.0); // Force mutation
-    
+
     expect(mutated.a).toBeGreaterThanOrEqual(optimizer.testDataRange.min);
     expect(mutated.a).toBeLessThanOrEqual(optimizer.testDataRange.max);
     expect(mutated.b).toBeGreaterThanOrEqual(optimizer.testDataRange.min);
@@ -49,7 +49,7 @@ describe('Genetic Test Optimizer', () => {
 
   test('should complete optimization process', () => {
     const result = optimizer.optimize();
-    
+
     expect(result).toHaveProperty('bestTestCase');
     expect(result).toHaveProperty('coverage');
     expect(typeof result.coverage).toBe('number');
