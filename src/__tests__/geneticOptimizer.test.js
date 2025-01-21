@@ -1,13 +1,9 @@
-// genetic-optimizer.test.js
 import { GeneticTestOptimizer } from '../geneticTestOptimiser.js';
-import { CoverageTracker } from '../coverage.js';
-import { InstrumentedCalculator } from '../instrumentedCalculator.js';
 
 describe('Genetic Test Optimizer', () => {
   let optimizer;
   
   beforeEach(() => {
-    // Create a smaller population and fewer generations for testing
     optimizer = new GeneticTestOptimizer(10, 5);
   });
 
@@ -59,56 +55,5 @@ describe('Genetic Test Optimizer', () => {
     expect(typeof result.coverage).toBe('number');
     expect(result.coverage).toBeGreaterThanOrEqual(0);
     expect(result.coverage).toBeLessThanOrEqual(100);
-  });
-});
-
-// coverage.test.js
-describe('Coverage Tracker', () => {
-  let coverageTracker;
-  
-  beforeEach(() => {
-    coverageTracker = new CoverageTracker();
-  });
-
-  test('should track function calls', () => {
-    coverageTracker.trackFunctionCall('add', 'success');
-    expect(coverageTracker.getCoveragePercentage()).toBeGreaterThan(0);
-  });
-
-  test('should reset coverage data', () => {
-    coverageTracker.trackFunctionCall('add', 'success');
-    coverageTracker.reset();
-    expect(coverageTracker.getCoveragePercentage()).toBe(0);
-  });
-});
-
-// instrumentedCalculator.test.js
-describe('Instrumented Calculator', () => {
-  let calculator;
-  let coverageTracker;
-  
-  beforeEach(() => {
-    coverageTracker = new CoverageTracker();
-    calculator = new InstrumentedCalculator(coverageTracker);
-  });
-
-  test('should track successful addition', () => {
-    calculator.add(2, 3);
-    expect(coverageTracker.getCoveragePercentage()).toBeGreaterThan(0);
-  });
-
-  test('should track error in addition', () => {
-    expect(() => calculator.add('invalid', 3)).toThrow();
-    expect(coverageTracker.getCoveragePercentage()).toBeGreaterThan(0);
-  });
-
-  test('should track zero case in multiplication', () => {
-    calculator.multiply(0, 5);
-    expect(coverageTracker.getCoveragePercentage()).toBeGreaterThan(0);
-  });
-
-  test('should track division by zero', () => {
-    expect(() => calculator.divide(5, 0)).toThrow();
-    expect(coverageTracker.getCoveragePercentage()).toBeGreaterThan(0);
   });
 });
